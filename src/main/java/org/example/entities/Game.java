@@ -1,14 +1,25 @@
 package org.example.entities;
 import java.util.*;
 public class Game {
+    private Deck deck;
     private List<Player> listOfPlayers;
     private List<Card> cards;
     private int CurrentPlayerIndex ;
 
-    public Game(List<Player> listOfPlayers, List<Card> cards, int currentPlayerIndex) {
+
+    public Game(Deck deck, List<Player> listOfPlayers, List<Card> cards, int currentPlayerIndex) {
+        this.deck = deck;
         this.listOfPlayers = listOfPlayers;
         this.cards = cards;
         CurrentPlayerIndex = currentPlayerIndex;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
     public List<Player> getListOfPlayers() {

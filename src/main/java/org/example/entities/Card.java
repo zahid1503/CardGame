@@ -1,31 +1,30 @@
 package org.example.entities;
 
 public class Card {
-    private String suit;
-    private Integer rank;
+    private Suit suit;
+    private Rank rank;
     private String cardType;
 
-
-    public Card(String suit, Integer rank) {
-        this.suit = suit;
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
+        this.suit = suit;
+
     }
 
 
-
-    public String getSuit() {
+    public Suit getSuit() {
         return suit;
     }
 
-    public void setSuit(String suit) {
+    public void setSuit(Suit suit) {
         this.suit = suit;
     }
 
-    public Integer getRank() {
+    public Rank getRank() {
         return rank;
     }
 
-    public void setRank(Integer rank) {
+    public void setRank(Rank rank) {
         this.rank = rank;
     }
 
