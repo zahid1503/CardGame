@@ -5,6 +5,7 @@ public class Player {
     private String playerName;
     private List<Card> listOfCards;
 
+
     public String getPlayerName() {
         return playerName;
     }
@@ -19,6 +20,10 @@ public class Player {
 
     public void setListOfCards(List<Card> listOfCards) {
         this.listOfCards = listOfCards;
+    }
+
+    public void addCardToHand(){
+
     }
 
     @Override
