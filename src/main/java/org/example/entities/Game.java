@@ -4,14 +4,13 @@ public class Game {
     private Deck deck;
     private List<Player> listOfPlayers;
     private List<Card> cards;
-    private int CurrentPlayerIndex ;
-
+    private int currentPlayerIndex ;
 
     public Game(Deck deck, List<Player> listOfPlayers, List<Card> cards, int currentPlayerIndex) {
         this.deck = deck;
         this.listOfPlayers = listOfPlayers;
         this.cards = cards;
-        CurrentPlayerIndex = currentPlayerIndex;
+        currentPlayerIndex = currentPlayerIndex;
     }
 
     public Deck getDeck() {
@@ -24,6 +23,10 @@ public class Game {
 
     public List<Player> getListOfPlayers() {
         return listOfPlayers;
+    }
+
+    public int getPlayersSize(){
+        return listOfPlayers.size();
     }
 
     public void setListOfPlayers(List<Player> listOfPlayers) {
@@ -39,19 +42,21 @@ public class Game {
     }
 
     public int getCurrentPlayerIndex() {
-        return CurrentPlayerIndex;
+        return currentPlayerIndex;
     }
 
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
-        CurrentPlayerIndex = currentPlayerIndex;
+
+        currentPlayerIndex = currentPlayerIndex;
     }
 
     @Override
     public String toString() {
         return "Game{" +
-                "listOfPlayers=" + listOfPlayers +
+                "deck=" + deck +
+                ", listOfPlayers=" + listOfPlayers +
                 ", cards=" + cards +
-                ", CurrentPlayerIndex=" + CurrentPlayerIndex +
+                ", currentPlayerIndex=" + currentPlayerIndex +
                 '}';
     }
 }

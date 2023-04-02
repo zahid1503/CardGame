@@ -3,8 +3,16 @@ import java.util.*;
 
 public class Player {
     private String playerName;
-    private List<Card> listOfCards;
+    private Hand hand;
+    private TurnDirection direction;
+    private int currentPlayerIndex ;
 
+
+    public Player(String playerName, Hand hand, TurnDirection direction) {
+        this.playerName = playerName;
+        this.hand = hand;
+        this.direction = direction;
+    }
 
     public String getPlayerName() {
         return playerName;
@@ -14,23 +22,40 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public List<Card> getListOfCards() {
-        return listOfCards;
+    public Hand getHand() {
+        return hand;
     }
 
-    public void setListOfCards(List<Card> listOfCards) {
-        this.listOfCards = listOfCards;
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
-    public void addCardToHand(){
+    public TurnDirection getDirection() {
+        return direction;
+    }
 
+    public void setDirection(TurnDirection direction) {
+        this.direction = direction;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
     }
 
     @Override
-    public String toString() {
-        return "Player{" +
-                "playerName='" + playerName + '\'' +
-                ", listOfCards=" + listOfCards +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return Objects.equals(getPlayerName(), player.getPlayerName()) && Objects.equals(getHand(), player.getHand()) && getDirection() == player.getDirection();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPlayerName(), getHand(), getDirection());
     }
 }

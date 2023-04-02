@@ -1,13 +1,15 @@
 package org.example.repositories;
 
+import org.example.entities.Card;
 import org.example.entities.Deck;
 
 import java.util.List;
 
-public interface IDeckRepository extends CRUDRepository<Deck,String> {
+public interface IDeckRepository extends CRUDRepository<Card,String> {
     @Override
-    Deck save(Deck entity);
+    Card save(Card entity);
 
     @Override
-    List<Deck> findAll();
+    List<Card> findAll();
+
 }
