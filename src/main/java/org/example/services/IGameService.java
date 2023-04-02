@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IGameService {
 
-    void startGame(List<Hand> hands);
+    void startGame();
 
     void playCard(Player player, Card card,Hand hand);
     void drawCard(Hand hand , Player player);

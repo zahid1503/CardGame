@@ -5,9 +5,5 @@ import java.util.*;
 
 public interface IPlayerService {
     List<Player> getAllPlayers();
-    Player getPlayerByName();
-    void addPlayer();
-
-    void removePlayer();
 
 }

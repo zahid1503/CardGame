@@ -27,7 +27,9 @@ public class GameService implements IGameService{
     }
 
     @Override
-    public void startGame(List<Hand> hands) {
+    public void startGame() {
+
+        List<Hand> hands= null;
         deckService.shuffle();
 
         // Deal 5 cards to each player
