@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import org.example.entities.Card;
 import org.example.entities.Deck;
 
 import java.util.HashMap;
@@ -8,24 +9,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DeckRepository implements IDeckRepository{
-    private final Map<String, Deck> deckMap;
+    private final Map<String, Card> cardMap;
 
 
     public DeckRepository(){
-        deckMap = new HashMap<String,Deck>();
+        cardMap = new HashMap<String,Card>();
     }
 
-    public DeckRepository(Map<String, Deck> deckMap) {
-        this.deckMap = deckMap;
+    public DeckRepository(Map<String, Card> cardMap) {
+        this.cardMap = cardMap;
     }
 
     @Override
-    public Deck save(Deck entity) {
+    public Card save(Card entity) {
         return null;
     }
 
     @Override
-    public List<Deck> findAll() {
-        return deckMap.values().stream().collect(Collectors.toList());
+    public List<Card> findAll() {
+        return cardMap.values().stream().collect(Collectors.toList());
     }
 }
