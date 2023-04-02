@@ -23,8 +23,16 @@ public class PlayerRepository implements IPlayerRepository{
     }
 
     @Override
-    public Player save(Player entity) {
-        return null;
+    public Player save(Player player) {
+
+        if( player.getId() == null ){
+            autoIncrement++;
+            Player u = new Player(Integer.toString(autoIncrement),player.getPlayerName());
+            playerMap.put(u.getId(),u);
+            return u;
+        }
+        playerMap.put(player.getId(),player);
+        return player;
     }
 
     @Override
@@ -35,4 +43,6 @@ public class PlayerRepository implements IPlayerRepository{
     public Optional<Player> findByName(Player name) {
         return Optional.ofNullable(playerMap.get(name));
     }
+
+
 }

@@ -2,16 +2,29 @@ package org.example.entities;
 import java.util.*;
 
 public class Player {
+
+    private String id;
     private String playerName;
     private Hand hand;
     private TurnDirection direction;
     private int currentPlayerIndex ;
 
 
-    public Player(String playerName, Hand hand, TurnDirection direction) {
+    public Player(String id, String playerName, Hand hand, TurnDirection direction) {
+        this.id = id;
         this.playerName = playerName;
         this.hand = hand;
         this.direction = direction;
+    }
+
+    public Player(String id, String playerName) {
+        this.id = id ;
+        this.playerName = playerName;
+
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getPlayerName() {
