@@ -1,56 +1,87 @@
 package org.example.services;
 
 import org.example.entities.*;
-import org.example.exceptions.InvalidCardException;
-import org.example.exceptions.PlayerNotFoundException;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.Scanner;
 
 public class GameService implements IGameService{
 
-    private IDeckService deckService;
-    private IPlayerService playerService;
-    private DiscardPile discardPile;
+    private final IDeckService deckService;
+    private final DiscardPile discardPile;
     private Game game;
-    private List<Player> listOfPlayers;
     private boolean skipNext = false;
     private GameStatus gameState;
 
     private Player winner;
+    List<Hand> hands;
 
-    public GameService(IDeckService deckService, IPlayerService playerService) {
+    public GameService(IDeckService deckService ) {
         this.deckService = deckService;
-        this.playerService = playerService;
         discardPile = new DiscardPile();
-
+        hands = new ArrayList<>();
     }
 
     @Override
     public void startGame() {
 
-        List<Hand> hands= null;
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please choose the number of players:");
+        System.out.println("2 3 4");
+        int numbers = scan.nextInt();
+        scan.nextLine();
+        for(int i=0;i<numbers;i++){
+            System.out.println("Enter player"+i+1+ " details:");
+            System.out.println("Name:");
+            String name = scan.nextLine();
+            Hand hand = new Hand(i,name);
+            hands.add(hand);
+        }
+
         deckService.shuffle();
+        System.out.println("Deck has been shuffled");
 
         // Deal 5 cards to each player
         deckService.dealCardsToHands(hands);
-
+        System.out.println("Cards have been distributed");
         // Start the game with the top card from the deck as the initial discard pile card
         Card topCard = deckService.drawCard();
-        discardPile.addCardToTop(topCard);
+         discardPile.addCardToTop(topCard);
+
+         System.out.println("Initial card has been placed on the discard pile");
 
         // Set the game state to active and start with the first player
-        gameState = gameState.ACTIVE;
-        game.getCurrentPlayerIndex();
+        gameState = GameStatus.ACTIVE;
+
+        game = new Game(hands,deckService.getAllCards(),0);
+
+        Play();
     }
 
+    void Play(){
+        Scanner scan = new Scanner(System.in);
+        while(gameState != GameStatus.OVER){
+            Hand hand = getNextPlayer();
+            System.out.println(discardPile.getCards());
+            System.out.println(hand.getPlayerName()+" turn");
+            System.out.println(hand.getCardsString());
+            System.out.println("Please choose the card you want to place[1,2,3,4,5...]");
+            int index = scan.nextInt();
+            scan.nextLine();
+
+            playCard(hand.getCards().get(index-1),hand);
+        }
+        System.out.println(winner.getPlayerName() + " is the winner!!!!");
+    }
     @Override
-    public void playCard(Player player, Card card,Hand hand)  {
+    public void playCard(Card card,Hand hand)  {
 
         TurnDirection direction = TurnDirection.CLOCKWISE;
 
         if (!discardPile.canCardBePlayed(card)) {
-             drawCard(hand, player);
+             drawCard(hand);
+             return;
         }
 
         hand.removeCardFromHand(card);
@@ -58,16 +89,16 @@ public class GameService implements IGameService{
 
         switch (card.getRank()) {
             case ACE:
-                skipNextPlayer(player);
+                skipNextPlayer();
                 break;
             case KING:
-                changePlayOrder(listOfPlayers, direction);
+                changePlayOrder(direction);
                 break;
             case QUEEN:
-                deckService.drawTwoCards(hand);
+                deckService.drawTwoCards(getNextPlayer());
                 break;
             case JACK:
-                deckService.drawFourCards(hand);
+                deckService.drawFourCards(getNextPlayer());
                 break;
             default:
                 // Do nothing for non-action cards
@@ -75,62 +106,44 @@ public class GameService implements IGameService{
 
 
         if (hand.getCardSizeInHand() == 0) {
-            gameState = gameState.OVER;
-            winner = player;
+            gameState = GameStatus.OVER;
+            winner = hand;
         }
-
-        getNextPlayer();
     }
-
     @Override
-    public void drawCard(Hand hand , Player player) {
+    public void drawCard(Hand hand ) {
 
         Card drawnCard = deckService.drawCard();
         hand.addCardToHand(drawnCard);
-
-        getNextPlayer();
     }
 
     int currentPlayerIndex =0;
 
     @Override
-    public Player getNextPlayer() {
-
-        TurnDirection direction = null;
+    public Hand getNextPlayer() {
         int size = game.getPlayersSize();
-        Player nextPlayer = null;
-            switch (direction) {
-            case CLOCKWISE:
-                currentPlayerIndex = (currentPlayerIndex + (skipNext ? 2 : 1)) % size;
-                break;
+            switch (game.getDirection()) {
+                case CLOCKWISE:
+                    currentPlayerIndex = (currentPlayerIndex + (skipNext ? 2 : 1)) % size;
+                    break;
                 case COUNTER_CLOCKWISE:
-                    currentPlayerIndex = (currentPlayerIndex - (skipNext ? 2 : 1)) + size % size;
+                    currentPlayerIndex = (currentPlayerIndex - (skipNext ? 2 : 1));
                     break;
             }
             skipNext = false;
-            nextPlayer = listOfPlayers.get(currentPlayerIndex);
-            return nextPlayer;
+            return hands.get(currentPlayerIndex);
 
     }
 
 
 
     @Override
-    public void changePlayOrder(List<Player> players, TurnDirection turnDirection) {
-
-        if (turnDirection == TurnDirection.CLOCKWISE) {
-
-            Player firstPlayer = players.remove(0);
-            players.add(firstPlayer);
-        } else {
-
-            Player lastPlayer = players.remove(players.size() - 1);
-            players.add(0, lastPlayer);
-        }
+    public void changePlayOrder(TurnDirection turnDirection) {
+        Collections.reverse(hands);
     }
 
     @Override
-    public void skipNextPlayer(Player player) {
+    public void skipNextPlayer() {
         skipNext = true;
     }
 

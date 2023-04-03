@@ -5,11 +5,7 @@ import org.example.entities.Deck;
 
 import java.util.List;
 
-public interface IDeckRepository extends CRUDRepository<Card,String> {
-    @Override
-    Card save(Card entity);
-
-    @Override
+public interface IDeckRepository {
     List<Card> findAll();
 
 }
