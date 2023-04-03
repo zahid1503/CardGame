@@ -3,27 +3,25 @@ import java.util.*;
 
 public class Player {
 
-    private String id;
+    private Integer id;
     private String playerName;
-    private Hand hand;
     private TurnDirection direction;
     private int currentPlayerIndex ;
 
 
-    public Player(String id, String playerName, Hand hand, TurnDirection direction) {
+    public Player(Integer id, String playerName,TurnDirection direction) { // Hand hand,
         this.id = id;
         this.playerName = playerName;
-        this.hand = hand;
         this.direction = direction;
     }
 
-    public Player(String id, String playerName) {
+    public Player(Integer id, String playerName) {
         this.id = id ;
         this.playerName = playerName;
 
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -33,14 +31,6 @@ public class Player {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
     }
 
     public TurnDirection getDirection() {
@@ -64,11 +54,11 @@ public class Player {
         if (this == o) return true;
         if (!(o instanceof Player)) return false;
         Player player = (Player) o;
-        return Objects.equals(getPlayerName(), player.getPlayerName()) && Objects.equals(getHand(), player.getHand()) && getDirection() == player.getDirection();
+        return Objects.equals(getPlayerName(), player.getPlayerName()) && getDirection() == player.getDirection(); // Objects.equals(getHand(), player.getHand())
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPlayerName(), getHand(), getDirection());
+        return Objects.hash(getPlayerName(),  getDirection()); //getHand(),
     }
 }

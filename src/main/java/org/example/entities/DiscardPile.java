@@ -1,11 +1,13 @@
 package org.example.entities;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class DiscardPile {
     private Stack<Card> cards;
 
     public DiscardPile() {
+        cards= new Stack<>();
     }
 
     public DiscardPile(Stack<Card> cards) {
@@ -21,22 +23,23 @@ public class DiscardPile {
         Rank topRank = topCard.getRank();
         Suit topSuit = topCard.getSuit();
 
-        if (drawnSuit == topSuit || drawnRank== topRank) {
-            return true; // Card matches either the suit or rank of top card
-        }
-        return false;
+        return drawnSuit == topSuit || drawnRank == topRank; // Card matches either the suit or rank of top card
 
     }
     public Card getTopCard(){
-        return cards.pop();
+        return cards.peek();
     }
     public void addCardToTop(Card card) {
 
         cards.push(card);
     }
 
-    public Stack<Card> getCards() {
-        return cards;
+    public String getCards() {
+        String res = "";
+        for (Card card: cards){
+            res = res.concat(card.getSuit().getSymbol()+card.getRank().getRank()+" ");
+        }
+        return res;
     }
 
     public void setCards(Stack<Card> cards) {

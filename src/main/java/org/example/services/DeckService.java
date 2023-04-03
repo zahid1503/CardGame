@@ -9,16 +9,11 @@ import java.util.List;
 import java.util.Random;
 
 public class DeckService implements IDeckService {
-
-    private IDeckRepository deckRepository;
+    private final IDeckRepository deckRepository;
     private List<Card> cards;
-    private Random random;
-
-
     public DeckService(IDeckRepository deckRepository) {
         this.deckRepository = deckRepository;
     }
-
     @Override
     public List<Card> getAllCards() {
         return deckRepository.findAll();
@@ -26,16 +21,17 @@ public class DeckService implements IDeckService {
 
     // Deal 5 cards to each player
     public void dealCardsToHands(List<Hand> hands) {
-        for (int i = 0; i < hands.size(); i++) {
+        for (Hand hand : hands) {
             for (int j = 0; j < 5; j++) {
-                hands.get(i).addCardToHand(drawCard());
+                hand.addCardToHand(drawCard());
             }
         }
     }
 
     @Override
     public void shuffle() {
-        Collections.shuffle(cards,random);
+        cards = getAllCards();
+        Collections.shuffle(cards,new Random());
     }
 
     @Override

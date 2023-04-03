@@ -5,16 +5,11 @@ import org.example.entities.Hand;
 import org.example.entities.Player;
 import org.example.entities.TurnDirection;
 
-import java.util.List;
-
 public interface IGameService {
-
     void startGame();
-
-    void playCard(Player player, Card card,Hand hand);
-    void drawCard(Hand hand , Player player);
+    void playCard(Card card,Hand hand);
+    void drawCard(Hand hand);
     Player getNextPlayer();
-    void changePlayOrder(List<Player> players, TurnDirection turnDirection);
-    void skipNextPlayer(Player player);
-
+    void changePlayOrder(TurnDirection turnDirection);
+    void skipNextPlayer();
 }

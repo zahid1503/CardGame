@@ -10,21 +10,14 @@ public class Main {
     public static void main(String[] args) {
         ApplicationConfig appConfig = new ApplicationConfig();
         CommandInvoker commandInvoker = appConfig.getCommandInvoker();
-        boolean gameOver = false;
         Scanner scanner = new Scanner(System.in);
         try{
-            while (!gameOver) {
-                System.out.println("Enter a command: ");
+                System.out.println("Please press [Y] to start the game: ");
                 String command = scanner.nextLine();
-                String token = scanner.nextLine();
-                String result = commandInvoker.executeCommand(command,token);
-
-                if (result.equals("Game Over")) {
-                    gameOver = true;
-                } else {
-                    System.out.println(result);
-                }
-            }
+                if(command.equalsIgnoreCase("Y"))
+                    commandInvoker.executeCommand("S","");
+                else
+                    return;
             scanner.close();
         } catch (NoSuchCommandException e) {
             e.printStackTrace();

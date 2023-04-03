@@ -2,15 +2,26 @@ package org.example.entities;
 import java.util.*;
 public class Game {
     private Deck deck;
-    private List<Player> listOfPlayers;
+    private List<Hand> listOfPlayers;
     private List<Card> cards;
     private int currentPlayerIndex ;
 
-    public Game(Deck deck, List<Player> listOfPlayers, List<Card> cards, int currentPlayerIndex) {
-        this.deck = deck;
+    private TurnDirection direction;
+
+    public TurnDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(TurnDirection direction) {
+        this.direction = direction;
+    }
+
+    public Game(List<Hand> listOfPlayers, List<Card> cards, int currentPlayerIndex) {
+//        this.deck = deck;
         this.listOfPlayers = listOfPlayers;
         this.cards = cards;
-        currentPlayerIndex = currentPlayerIndex;
+        currentPlayerIndex = 0;
+        direction = TurnDirection.CLOCKWISE;
     }
 
     public Deck getDeck() {
@@ -21,7 +32,7 @@ public class Game {
         this.deck = deck;
     }
 
-    public List<Player> getListOfPlayers() {
+    public List<Hand> getListOfPlayers() {
         return listOfPlayers;
     }
 
@@ -29,7 +40,7 @@ public class Game {
         return listOfPlayers.size();
     }
 
-    public void setListOfPlayers(List<Player> listOfPlayers) {
+    public void setListOfPlayers(List<Hand> listOfPlayers) {
         this.listOfPlayers = listOfPlayers;
     }
 
@@ -44,12 +55,6 @@ public class Game {
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
-
-    public void setCurrentPlayerIndex(int currentPlayerIndex) {
-
-        currentPlayerIndex = currentPlayerIndex;
-    }
-
     @Override
     public String toString() {
         return "Game{" +
